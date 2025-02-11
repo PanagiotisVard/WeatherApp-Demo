@@ -81,7 +81,9 @@ h1 {
   display: flex;
   justify-content: space-evenly;
   text-align: center;
-  width: 100%;
+  position: absolute;
+  bottom: 95px;
+  width: 95%;
   margin: 1rem auto;
   padding: 1rem;
   border-radius: 12px;
