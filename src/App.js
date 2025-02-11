@@ -1,21 +1,17 @@
-// App.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./index.css";
-import WeatherDetails from "./WeatherDetails"; // Import the new component
+import WeatherDetails from "./WeatherDetails";
 
 function App() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // State for error message
-  const [searchTriggered, setSearchTriggered] = useState(false); // Flag to trigger API call
+  const [errorMessage, setErrorMessage] = useState("");
+  const [searchTriggered, setSearchTriggered] = useState(false);
 
-  // API URL
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=454df79af73efa0942bf333f8b4fd118`;
 
-  // useEffect hook to fetch weather data when searchTriggered is true
   useEffect(() => {
-    // If search is not triggered or location is empty, do nothing
     if (!searchTriggered || !location) {
       return;
     }
@@ -28,14 +24,13 @@ function App() {
           setErrorMessage("Location not found. Please try again.");
           setData({});
         } else {
-          setErrorMessage(""); // Clear error message if the location is found
+          setErrorMessage("");
           setData(response.data);
         }
       } catch (error) {
         setErrorMessage("An error occurred. Please try again later.");
         setData({});
       } finally {
-        // Reset searchTriggered to prevent re-fetching on every render
         setSearchTriggered(false);
       }
     };
@@ -43,15 +38,14 @@ function App() {
     fetchWeatherData();
   }, [searchTriggered, location]); // useEffect will run only when searchTriggered or location changes
 
-  // Search Location handler when pressing Enter
   const searchLocation = (event) => {
     if (event.key === "Enter") {
       if (!location) {
         setErrorMessage("Please enter a location");
         setData({});
       } else {
-        setErrorMessage(""); // Clear error message when valid location is entered
-        setSearchTriggered(true); // Trigger the API call
+        setErrorMessage("");
+        setSearchTriggered(true);
       }
     }
   };
@@ -68,7 +62,6 @@ function App() {
         />
       </div>
 
-      {/* Display error message as a modal */}
       {errorMessage && (
         <div className="error-modal">
           <div className="error-modal-content">
@@ -93,7 +86,6 @@ function App() {
           </div>
         </div>
 
-        {/* Pass the necessary data as a single object to WeatherDetails */}
         {data.name != undefined && (
           <WeatherDetails
             prop={{
